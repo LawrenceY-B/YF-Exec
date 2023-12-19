@@ -25,7 +25,7 @@ import { NgxOtpInputModule } from 'ngx-otp-input';
     SharedModule,
     RoutingModule,
     MaterialModule,
-    NgxOtpInputModule
+    NgxOtpInputModule,
 
 
   ]
