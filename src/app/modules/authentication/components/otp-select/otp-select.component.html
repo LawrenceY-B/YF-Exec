@@ -1,1 +1,30 @@
-<p>otp-select works!</p>
+<section class="section">
+    <nav class="section__topBar">
+      <img src="assets/images/LIC.png" alt="logo" />
+      <h1 class="section__topBar__welcome">OTP Request</h1>
+    </nav>
+    <div class="section__bottomBar">
+            <div class="section__bottomBar__email" (click)="toggleEmail()">
+                <div [ngStyle]="button">
+                    <div [ngClass]="{'section__bottomBar__email__active': sendviaEmail === 'Email'}"></div>
+                </div>
+                <div class="section__bottomBar__email__text">
+                    <h4>Verify Via Email</h4>
+                    <p>{{email}}</p>
+                </div>
+            </div>
+            <div class="section__bottomBar__email" (click)="togglePhoneNumber()">
+                <div [ngStyle]="button">
+                    <div [ngClass]="{'section__bottomBar__email__active': sendviaEmail === 'Phone Number'}"></div>
+                </div>
+                <div class="section__bottomBar__email__text">
+                    <h4>Verify Via Phone</h4>
+                    <p>{{phoneNumber}}</p>
+                </div>
+            </div>
+          <button>Send <img src="assets/svgs/send.svg" alt="" /></button>
+      
+  
+    </div>
+  </section>
+  

@@ -9,6 +9,7 @@ import { ApiService } from './shared/services/api.service';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { StateStorageService } from './shared/services/state-storage.service';
+import { ThemeService } from './shared/services/theme.service';
 
 
 
@@ -29,6 +30,7 @@ import { StateStorageService } from './shared/services/state-storage.service';
     ApiService,
     AuthService,
     AuthGuardService,
+    ThemeService,
     StateStorageService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
   ],

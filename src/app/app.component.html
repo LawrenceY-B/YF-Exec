@@ -1,48 +1,9 @@
-<section class="button__container">
-  <div class="button__group" >
-  <ng-container *ngFor="let item of ButtonCatgory">
-    <button class="button" draggable="true" (dragstart)="startDrag($event)">
-      {{ item }}
-      <span (click)="removeCategory(item)"></span>
-    </button>
-  </ng-container>
- 
-</div>
-<form [formGroup]="ActivityFormBuilder" (submit)="Submit()">
-  <input type="text" formControlName="Activity" />
-  <button class="submit"><img src="assets/svgs/plus.svg" alt="" srcset=""></button>
-</form>
-</section>
-
-<form [formGroup]="TableFormBuilder">
-<table>
-  <tr>
-    <th>Date</th>
-    <th>Activity</th>
-    <th>Leaders</th>
-    <th>Synopsis</th>
-  <tr
-    *ngFor="let item of activities; let i = index"
-    
-  >
-    <td><input type="text" readonly formControlName="Date"/></td>
-    <td ><input (dragover)="allowDrop($event)"
-      (drop)="drop($event, val)" #val type="text" [value]="item.activity"
-      formControlName="Activity"
-      /></td>
-    <td>
-      <ul>
-        <li *ngFor="let leader of item.leaders">{{ leader }}</li>
-      </ul>
-    </td>
-    <td contenteditable="true" (keydown)="onKeyDown($event)">
-      <textarea
-        [value]="item.synopsis"
-        (input)="adjustTextareaHeight($event)"
-      ></textarea>
-    </td>
-  </tr>
-</table>
-</form>
+<main  [ngClass]="{'dark-theme': themeService.isDarkTheme, 'light-theme': !themeService.isDarkTheme}">
+  <div>
+    <img (click)="switchTheme()" *ngIf="themeService.isDarkTheme" src="assets/svgs/sunny.svg" alt="">
+    <img (click)="switchTheme()" *ngIf="!themeService.isDarkTheme" src="assets/svgs/dark.svg" alt="">
+    </div>
+  <router-outlet></router-outlet>
+</main>
 
 
