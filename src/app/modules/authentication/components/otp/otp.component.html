@@ -1,0 +1,18 @@
+<section class="section">
+    <nav class="section__topBar">
+      <img src="assets/images/LIC.png" alt="logo" />
+      <h1 class="section__topBar__welcome">Welcome Back</h1>
+    </nav>
+    <div class="section__bottomBar">
+        <ngx-otp-input [config]="otpInputConfig" (fill)="OTP" [status]="status"></ngx-otp-input>
+        <button       *ngIf="!submitted else forgotProgress"
+        (click)="onSubmit()">
+          Send <img src="assets/svgs/send.svg" alt="" />
+        </button>
+    </div>
+  
+  </section>
+  <ng-template #forgotProgress>
+      <mat-spinner strokeWidth="3" [diameter]="30"></mat-spinner>
+    </ng-template>
+  

@@ -10,6 +10,9 @@ import { AuthService } from './shared/services/auth.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { StateStorageService } from './shared/services/state-storage.service';
 import { ThemeService } from './shared/services/theme.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { NgxOtpInputModule } from 'ngx-otp-input';
 
 
 
@@ -24,6 +27,9 @@ import { ThemeService } from './shared/services/theme.service';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    NgxOtpInputModule
   ],
   providers: [
     DatePipe,

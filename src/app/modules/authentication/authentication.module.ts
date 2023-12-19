@@ -6,6 +6,9 @@ import { LoginComponent } from './components/login/login.component';
 import { OtpSelectComponent } from './components/otp-select/otp-select.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RoutingModule } from './routing.module';
+import { MaterialModule } from 'src/app/material.module';
+import { OtpComponent } from './components/otp/otp.component';
+import { NgxOtpInputModule } from 'ngx-otp-input';
 
 
 
@@ -14,12 +17,16 @@ import { RoutingModule } from './routing.module';
     AuthenticationComponent,
     AddUsersComponent,
     LoginComponent,
-    OtpSelectComponent
+    OtpSelectComponent,
+    OtpComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    RoutingModule
+    RoutingModule,
+    MaterialModule,
+    NgxOtpInputModule
+
 
   ]
 })

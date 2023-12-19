@@ -22,9 +22,12 @@
                     <p>{{phoneNumber}}</p>
                 </div>
             </div>
-          <button>Send <img src="assets/svgs/send.svg" alt="" /></button>
+          <button *ngIf="!submitted else forgotProgress" 
+          (click)="onSubmit()">Send <img src="assets/svgs/send.svg" alt="" /></button>
       
   
     </div>
   </section>
-  
+  <ng-template #forgotProgress>
+    <mat-spinner strokeWidth="3" [diameter]="30"></mat-spinner>
+  </ng-template>

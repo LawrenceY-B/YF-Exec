@@ -9,19 +9,28 @@
       <label for="userName">User Name</label>
       <div class="section__userForm__container">
         <div class="section__userForm__select">
-            <img src="assets/svgs/user.svg" alt="">
-        <select name="userName" id="userName">
-          <option value="Select Your User" hidden>Select User Account</option>
-          <option value="Lawrence">Lawrence Yirenkyi-Boafo Jnr</option>
-          <option value="user3">Esther Aryee</option>
-          <option value="user4">Adom Adu-Amoani</option>
-          <option value="user5">Akosua Addae Agyeman</option>
-        </select>
-    </div>
-        <button (click)="onSubmit()">Send <img src="assets/svgs/send.svg" alt="" /></button>
+          <img src="assets/svgs/user.svg" alt="" />
+          <select name="userName" id="userName">
+            <option value="Select Your User" hidden>Select User Account</option>
+            <option value="Lawrence">Lawrence Yirenkyi-Boafo Jnr</option>
+            <option value="user3">Esther Aryee</option>
+            <option value="user4">Adom Adu-Amoani</option>
+            <option value="user5">Akosua Addae Agyeman</option>
+          </select>
+        </div>
+        <button       *ngIf="!submitted else forgotProgress"
+        (click)="onSubmit()">
+          Send <img src="assets/svgs/send.svg" alt="" />
+        </button>
       </div>
     </div>
-        <span>New Here? Request for access to view the exec portal.
-      <a>Request Here</a></span>
+    <span
+      >New Here? Request for access to view the exec portal.
+      <a>Request Here</a></span
+    >
   </div>
+
 </section>
+<ng-template #forgotProgress>
+    <mat-spinner strokeWidth="3" [diameter]="30"></mat-spinner>
+  </ng-template>
