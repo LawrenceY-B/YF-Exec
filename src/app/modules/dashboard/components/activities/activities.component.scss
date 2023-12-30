@@ -1,0 +1,90 @@
+.button {
+     cursor: grab;
+     position: relative;
+    user-select: none;
+    padding: 10px;
+    background-color: #9437fe;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    text-transform: capitalize;
+  
+    span{
+        display: none;
+        background-color: #e74c3c;
+        height: 13px;
+        width: 13px;
+        border-radius: 100%;
+        position: absolute;
+        top: -3px;
+        right: -2px;
+        cursor: pointer;
+    }
+    &__group{
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 400px;
+        gap: 5px;
+    }
+    &__container{
+        h1{
+            font-size: 1.2rem;
+            font-family: "M Bold";}
+        display: flex;
+        flex-direction: column;
+        min-width: 330px;
+        max-width: 420px;
+        form{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+        input{
+            height: 20px;
+            border: 1px solid #a7a7a7;
+            border-radius: 2px;
+            padding: 2px;
+        }
+        input:focus{
+            outline: none;
+            border: 1px solid #7638FF;
+        }
+        .submit{
+            height:30px;
+            width:30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            border-radius: 8px;
+            background-color: #7638FF;
+            color: #fff;
+            cursor: pointer;
+            &:hover{
+                background-color: #7638FF9b;
+            }
+        }
+
+    }
+}
+.button:hover span{
+    display: block;
+}
+.button:nth-child(odd){
+    background-color: #b103eb;
+    padding: 10px 7px;
+}
+.button:nth-child(4){
+    background-color: #27ae60;
+    padding: 10px 15px;
+}
+.button:nth-child(7){
+    background-color: #27ae60;
+    padding: 10px 15px;
+}
+.button:last-child{
+    background-color: #3c6de7;
+    padding: 10px 25px;
+}

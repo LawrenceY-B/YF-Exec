@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EmptyComponent } from './components/empty/empty.component';
 import { NewplanComponent } from './components/newplan/newplan.component';
+import { ActivitiesComponent } from './components/activities/activities.component';
 
 
 
@@ -16,6 +17,8 @@ import { NewplanComponent } from './components/newplan/newplan.component';
     DashboardComponent,
     PlannerComponent,
     EmptyComponent,
+    NewplanComponent,
+    ActivitiesComponent
     
   ],
   imports: [

@@ -92,12 +92,14 @@ body {
   --text-color: hsl(0, 0%, 100%);
   --link-color: hsl(228, 60%, 60%);
   --label-color: hsl(235, 25%, 82%);
-  --gradient-color:linear-gradient(to right, #4b6cb7, #182848);;
+  --gradient-color:linear-gradient(to right, #4b6cb7, #182848);
+  --newplanborder: hsl(225, 7%, 22%);
+  --newplanBoxShadow: 0px 2px 4px -2px rgba(255, 255, 255, 0.06),
+  0px 4px 8px -2px rgba(255, 255, 255, 0.1);
 }
 .light-theme {
   --background: hsl(0, 0%, 98%);
   --slidebackground: hsl(235, 21%, 11%);
-
   --button-color: hsl(259, 100%, 61%);
   --text-color: hsl(240, 2%, 8%);
   --link-color: hsl(209, 83%, 50%);
@@ -108,7 +110,10 @@ body {
     #9872e9 39.01%,
     #a9a2f8 72.01%,
     #f7d7ff 96.79%
-  )
+  );
+  --newplanborder: hsl(220, 17%, 93%);
+  --newplanBoxShadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
+    0px 4px 8px -2px rgba(16, 24, 40, 0.1);
 }
 
 html, body { height: 100%; }

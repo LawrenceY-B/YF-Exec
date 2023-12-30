@@ -1,0 +1,64 @@
+.planner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    &__Box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    height: fit-content;
+
+    tr:nth-child(even){
+      background: #F3F4F6;
+
+    }
+  
+  }
+  
+  
+  .cdk-header-row{
+  
+    width: 50%;
+    border-bottom: 2px solid #E5E7EB;
+  
+  }
+  
+  th{
+    padding: 15px;
+    color: #6B7280;
+    letter-spacing: 0.005em;
+    text-align: left;
+  
+  }
+  
+  th:nth-child(1){
+    display: flex;
+    justify-content: flex-start;
+    
+   
+  }
+  
+  td{
+ 
+    color: #1F2937;
+      padding: 15px;
+    
+  }
+  
+  tr td:nth-child(1){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+
+  

@@ -1,1 +1,66 @@
-<p>planner works!</p>
+<main class="planner">
+  <section class="planner__Box">
+    <table cdk-table [dataSource]="ELEMENT_DATA">
+      <!-- Date Column -->
+      <ng-container cdkColumnDef="Date">
+        <th cdk-header-cell *cdkHeaderCellDef>Date</th>
+        <td cdk-cell *cdkCellDef="let element">{{ element.date | date }}</td>
+      </ng-container>
+
+      <!-- Activity Column -->
+      <ng-container cdkColumnDef="Activity">
+        <th cdk-header-cell *cdkHeaderCellDef>Activity</th>
+        <td cdk-cell *cdkCellDef="let element">{{ element.activity }}</td>
+      </ng-container>
+
+      <!-- Leaders Column -->
+      <ng-container cdkColumnDef="Leaders">
+        <th cdk-header-cell *cdkHeaderCellDef>Leaders</th>
+        <td cdk-cell *cdkCellDef="let element">{{ element.leaders }}</td>
+      </ng-container>
+
+      <!-- Synopsis Column -->
+      <ng-container cdkColumnDef="Synopsis">
+        <th cdk-header-cell *cdkHeaderCellDef>Synopsis</th>
+        <td cdk-cell *cdkCellDef="let element">{{ element.synopsis }}</td>
+      </ng-container>
+
+      <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div>
+      <app-activities></app-activities>
+      <form [formGroup]="PlannerFormBuilder" (dragover)="allowDrop($event)">
+        <h1>Add Week</h1>
+        <div>
+          <label for="Date">Date</label>
+          <select formControlName="Date">
+            <option value=""></option>
+          </select>
+        </div>
+        <div>
+          <label for="Activity">Activity</label>
+          <input
+            type="text"
+            placeholder="Activity"
+            formControlName="Activity"
+          />
+        </div>
+        <div>
+          <label for="Leaders">Leaders</label>
+          <div class="inputBox">
+            <input type="text" placeholder="Leaders" formControlName="Leaders" />
+            <button class="submit">
+              <img src="assets/svgs/plus.svg" alt="" srcset="" />
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label for="Synopsis">Synopsis</label>
+          <textarea placeholder="Synopsis"></textarea>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

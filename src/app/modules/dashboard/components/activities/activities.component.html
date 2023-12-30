@@ -1,0 +1,16 @@
+<section class="button__container">
+    <h1>Activities</h1>
+    <div class="button__group" >
+    <ng-container *ngFor="let item of ButtonCatgory">
+      <button class="button" draggable="true" (dragstart)="startDrag($event)">
+        {{ item }}
+        <span (click)="removeCategory(item)"></span>
+      </button>
+    </ng-container>
+   
+  </div>
+  <form [formGroup]="ActivityFormBuilder" (submit)="Submit()">
+    <input type="text" formControlName="Activity" />
+    <button class="submit"><img src="assets/svgs/plus.svg" alt="" srcset=""></button>
+  </form>
+  </section>
