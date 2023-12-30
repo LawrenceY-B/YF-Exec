@@ -129,7 +129,7 @@ export class ActivitiesComponent implements OnInit {
       synopsis: this.PlannerFormBuilder.value.Synopsis as string,
       leaders: this.name,
     }
-    console.log(data)
+    // console.log(data)
     this.plannerForm.emit(data)
     this.PlannerFormBuilder.reset();
     localStorage.setItem('leadernames', '')

@@ -110,39 +110,93 @@
     }
   }
 }
+@media only screen and (max-width:468px){
+  .newPlanContainer{
+    margin-top: 40px;
+    .newPlanBox{
+      margin: 10px;
+      form{
+        .inputBox{
+          label{
+            font-size: 16px;
+          }
+        }
+        input[type="text"],
+        select,
+        input[type="date"] {
+          width: 150px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 8px ;
+          outline: none;
+        }
+        input[type="date"] {
+          width: 100px;
+          padding: 8px;
+        }
+        .verse {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 5px;
 
-
-
-// //table stuff
-// table{
-//     width: 50vw;
-
-// }
-// tr:nth-child(even){
-//     background-color: #ffffff;
-// }
-// th{
-//     background-color: #3498db;
-//     color: #fff;
-//     padding: 10px;
-//     text-align: left;
-// }
-// td{
-//     background-color: #ecf0f1;
-//     padding: 10px;
-//     text-align: left;
-// }
-// textarea{
-//     width: 80%;
-//     height: auto ;
-//     overflow: hidden;
-//     padding: 10px;
-//     border-radius: 5px;
-//     border: 1px solid #ccc;
-//     resize: none;
-// }
-// input[type=text]{
-//     background-color: transparent;
-//     border: none;
-//     padding: 10px;
-// }
+            background-color: var(--button-color);
+            color: #fff;
+            cursor: pointer;
+            &:hover {
+              background-color: #7638ff9b;
+            }
+          }
+        }
+        .period {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          hr {
+            height: 3px;
+            border: none;
+            border-radius: 3px;
+            width: 20px;
+            background-color: gray;
+          }
+        }
+        .btnBox {
+          align-self: flex-end;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          .submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--button-color);
+            color: #fff;
+            cursor: pointer;
+            &:hover {
+              background-color: #7638ff9b;
+            }
+          }
+          .cancel {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--background);
+            border: 2px solid var(--button-color);
+            color: var(--text-color);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

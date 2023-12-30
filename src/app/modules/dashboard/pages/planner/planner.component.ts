@@ -1,9 +1,18 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { IActivity } from 'src/app/shared/models/activity.model';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-planner',
@@ -11,14 +20,13 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./planner.component.scss'],
 })
 export class PlannerComponent implements OnInit, AfterViewInit {
-  @Input() plannerReceiver: IActivity[] = [];
+  plannerReceiver: IActivity[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('contentToExport', { static: false }) contentToExport!: ElementRef;
 
   constructor(private router: Router, private fb: NonNullableFormBuilder) {}
   displayedColumns: string[] = ['Date', 'Activity', 'Leaders', 'Synopsis'];
-  dataSource!: MatTableDataSource<any>; // Declare dataSource as MatTableDataSource
-
-
+  dataSource!: MatTableDataSource<any>;
 
   ngOnInit(): void {
     const data = localStorage.getItem('planner');
@@ -28,25 +36,40 @@ export class PlannerComponent implements OnInit, AfterViewInit {
     }
 
     const detail = localStorage.getItem('timetable');
-    if(!detail){
+    if (!detail) {
       this.plannerReceiver = [];
     }
-    
-  this.plannerReceiver = JSON.parse(detail as string) as IActivity[];
-  this.dataSource = new MatTableDataSource(this.plannerReceiver);
 
-   
+    this.plannerReceiver = JSON.parse(detail as string) as IActivity[];
+    this.dataSource = new MatTableDataSource(this.plannerReceiver);
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-
   }
   receivePlanner(event: IActivity) {
-    this.plannerReceiver.push(event);
-    localStorage.setItem('timetable', JSON.stringify(this.plannerReceiver));
-    this.dataSource = new MatTableDataSource(this.plannerReceiver);
-    this.dataSource.paginator = this.paginator;
+    console.log(event);
 
+    if (!this.plannerReceiver) {
+      this.plannerReceiver = [];
+    }
+    this.plannerReceiver.push(event);
+    console.table(this.plannerReceiver);
+    localStorage.setItem('timetable', JSON.stringify(this.plannerReceiver));
+    this.dataSource = new MatTableDataSource([...this.plannerReceiver]);
+    this.dataSource.paginator = this.paginator;
     console.log(this.plannerReceiver);
+  }
+
+  exportAsPDF() {
+    const content = this.contentToExport.nativeElement;
+    html2canvas(content).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      let width = pdf.internal.pageSize.getWidth();
+      let height = (canvas.height * width) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+
+      pdf.save('exported-view.pdf');
+    });
   }
 }

@@ -1,7 +1,8 @@
 <main class="planner">
+  <button (click)="exportAsPDF()" class="exportpdf">Export <img src="assets/svgs/gg_export.svg" alt=""></button>
   <section class="planner__Box">
-    <div class="plannaer__Box__table">
-      <table cdk-table [dataSource]="dataSource">
+    <div class="planner__Box__table" #contentToExport>
+      <table cdk-table [dataSource]="dataSource" >
         <!-- Date Column -->
         <ng-container cdkColumnDef="Date">
           <th cdk-header-cell *cdkHeaderCellDef>Date</th>

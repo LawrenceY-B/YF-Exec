@@ -132,10 +132,10 @@ header {
           position: absolute;
           display: none;
           width: 100dvw;
-          height: 100dvh;
+          height: 50dvh;
           top: 0px;
           left: 0px;
-          background-color: #ffffffbe;
+          background-color: var(--text-color);
           animation: slide 0.8s ease;
           animation-direction: reverse;
         }
@@ -152,12 +152,12 @@ header {
           align-items: center;
           gap: 6px;
           width: 100%;
-          height: 20%;
+          height: 25%;
+          padding: 10px 20px;
           font-family: "M Semibold";
           font-size: 18px;
           animation: slide1 1s ease-in;
-          color: red !important;
-          background-color: aqua;
+          background-color: var(--background);
 
           cursor: pointer;
           &__icon {
