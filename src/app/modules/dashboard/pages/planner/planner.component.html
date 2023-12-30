@@ -30,37 +30,7 @@
     </table>
     <div>
       <app-activities></app-activities>
-      <form [formGroup]="PlannerFormBuilder" (dragover)="allowDrop($event)">
-        <h1>Add Week</h1>
-        <div>
-          <label for="Date">Date</label>
-          <select formControlName="Date">
-            <option value=""></option>
-          </select>
-        </div>
-        <div>
-          <label for="Activity">Activity</label>
-          <input
-            type="text"
-            placeholder="Activity"
-            formControlName="Activity"
-          />
-        </div>
-        <div>
-          <label for="Leaders">Leaders</label>
-          <div class="inputBox">
-            <input type="text" placeholder="Leaders" formControlName="Leaders" />
-            <button class="submit">
-              <img src="assets/svgs/plus.svg" alt="" srcset="" />
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <label for="Synopsis">Synopsis</label>
-          <textarea placeholder="Synopsis"></textarea>
-        </div>
-      </form>
+      
     </div>
   </section>
 </main>

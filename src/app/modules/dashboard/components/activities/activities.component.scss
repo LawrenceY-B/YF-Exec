@@ -88,3 +88,49 @@
     background-color: #3c6de7;
     padding: 10px 25px;
 }
+.plannerform{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .formField{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        label{
+            font-size: 0.8rem;
+            font-family: "M Bold";
+        }
+        input,select,textarea{
+            border: 1px solid #a7a7a7;
+            border-radius: 2px;
+            padding: 8px;
+        }
+        input:focus{
+            outline: none;
+            border: 1px solid #7638FF;
+        }
+        .inputBox{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+          
+        }
+        .addLeader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 5px;
+  
+            background-color: var(--button-color);
+            color: #fff;
+            cursor: pointer;
+            &:hover {
+              background-color: #7638ff9b;
+            }
+          }
+    }
+}

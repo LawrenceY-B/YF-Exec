@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Activity } from 'src/app/shared/models/activity.model';
+import { IActivity, IProgramInfo } from 'src/app/shared/models/activity.model';
 import { ThemeService } from 'src/app/shared/services/theme.service';
 
 @Component({
@@ -42,7 +42,15 @@ export class NewplanComponent implements OnInit {
   Submit(){
     console.log(this.newPlan);
     console.log(this.newPlan.value);
-    localStorage.setItem('planner', JSON.stringify(this.newPlan.value));
+    const data : IProgramInfo ={
+      Year: this.newPlan.value.Year as string,
+      Theme: this.newPlan.value.Theme as string,
+      Title: this.newPlan.value.Title as string,
+      Verses: this.newPlan.value.Verses as string[],
+      ProgramStart: this.newPlan.value.ProgramStart as string,
+      ProgramEnd: this.newPlan.value.ProgramEnd as string,
+    }
+    localStorage.setItem('planner', JSON.stringify(data));
     this.router.navigate(['/dashboard/planner']);
   }
   Cancel(){

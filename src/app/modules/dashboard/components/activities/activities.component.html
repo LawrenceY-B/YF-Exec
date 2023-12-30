@@ -1,16 +1,61 @@
 <section class="button__container">
-    <h1>Activities</h1>
-    <div class="button__group" >
+  <h1>Activities</h1>
+  <div class="button__group">
     <ng-container *ngFor="let item of ButtonCatgory">
-      <button class="button" draggable="true" (dragstart)="startDrag($event)">
+      <button
+        class="button"
+        [attr.draggable]="true"
+        (dragstart)="startDrag($event)"
+      >
         {{ item }}
         <span (click)="removeCategory(item)"></span>
       </button>
     </ng-container>
-   
   </div>
   <form [formGroup]="ActivityFormBuilder" (submit)="Submit()">
     <input type="text" formControlName="Activity" />
-    <button class="submit"><img src="assets/svgs/plus.svg" alt="" srcset=""></button>
+    <button class="submit">
+      <img src="assets/svgs/plus.svg" alt="" srcset="" />
+    </button>
   </form>
-  </section>
+</section>
+<form class="plannerform" [formGroup]="PlannerFormBuilder">
+  <h1>Add Week</h1>
+  <div class="formField">
+    <label for="Date">Date</label>
+    <select formControlName="Date">
+      <option value="" hidden>Select date</option>
+      <ng-container *ngFor="let day of weeks">
+        <option [value]="day | date">{{ day | date }}</option>
+      </ng-container>
+    </select>
+  </div>
+  <div
+    class="formField"
+    (dragover)="allowDrop($event)"
+    (drop)="drop($event, PlannerFormBuilder.get('Activity')!)"
+  >
+    <label for="Activity">Activity</label>
+    <input type="text" [value]="" formControlName="Activity" />
+  </div>
+  <div class="formField">
+    <label for="Leaders">Leaders</label>
+    <div
+      *ngFor="let leader of leaderForms.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="inputBox">
+        <input type="text" placeholder="Leader" formControlName="Leaders" />
+        <button class="addLeader" (click)="addLeader()">
+          <img src="assets/svgs/plus.svg" alt="" srcset="" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="formField">
+    <label for="Synopsis">Synopsis</label>
+    <textarea placeholder="Synopsis"></textarea>
+  </div>
+</form>
+<br /><br /><br /><br /><br />
