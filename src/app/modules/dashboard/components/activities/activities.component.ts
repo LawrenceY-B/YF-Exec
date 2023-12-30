@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  NonNullableFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { IProgramInfo } from 'src/app/shared/models/activity.model';
+import { IActivity, IProgramInfo } from 'src/app/shared/models/activity.model';
 
 @Component({
   selector: 'app-activities',
@@ -10,7 +16,8 @@ import { IProgramInfo } from 'src/app/shared/models/activity.model';
 })
 export class ActivitiesComponent implements OnInit {
   ButtonCatgory: string[] = [];
-  weeks : Date[]=[];
+  weeks: Date[] = [];
+  @Output() plannerForm = new EventEmitter<IActivity>();
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -54,22 +61,39 @@ export class ActivitiesComponent implements OnInit {
   PlannerFormBuilder = this.formBuilder.group({
     Date: ['', Validators.required],
     Activity: ['', Validators.required],
-    
     Synopsis: ['', Validators.required],
-    Leaders: this.formBuilder.array([this.createLeader()])
   });
+  
+
+   LeaderFormBuilder =this.formBuilder.group({
+      Leaders: [''],
+    });
+    name: string[] = [];
+
+ addLeader() {
+  let leadername=this.LeaderFormBuilder.value.Leaders as string;
+  this.name.push(leadername);
+  this.LeaderFormBuilder.reset();
+  localStorage.setItem('leadernames', JSON.stringify(this.name));
+  const temp = localStorage.getItem('leadernames');
+  if (temp) {
+    this.name = JSON.parse(temp);
+  }
+
+ }
+
   ActivityFormBuilder = this.formBuilder.group({
     Activity: ['', Validators.required],
   });
   startDrag(event: any) {
     event.dataTransfer.setData('text/plain', event.target.textContent);
   }
-  
+
   allowDrop(event: DragEvent) {
     event.preventDefault();
   }
-  
-  drop(event: DragEvent, control:AbstractControl) {
+
+  drop(event: DragEvent, control: AbstractControl) {
     event.preventDefault();
     const data = event.dataTransfer?.getData('text/plain') as string;
     control.setValue(data);
@@ -77,18 +101,7 @@ export class ActivitiesComponent implements OnInit {
 
     // You can update your 'activities' array or perform any other actions with the dropped data.
   }
-  get leaderForms() {
-    return (this.PlannerFormBuilder.get('Leaders') as FormArray);
-  }
-  createLeader(): FormGroup {
-    return this.formBuilder.group({
-      Leaders: ['', Validators.required]
-    });
-  }
 
-  addLeader() {
-    this.leaderForms.push(this.createLeader());
-  }
 
   Submit() {
     const data = this.ActivityFormBuilder.value.Activity as string;
@@ -109,6 +122,18 @@ export class ActivitiesComponent implements OnInit {
     this.ButtonCatgory = this.ButtonCatgory.filter((item) => item !== category);
     localStorage.setItem('ButtonCatgory', JSON.stringify(this.ButtonCatgory));
   }
+  submitPlanner() {
+
+    const data : IActivity ={
+      date: new Date(this.PlannerFormBuilder.value.Date as string),
+      activity: this.PlannerFormBuilder.value.Activity as string,
+      synopsis: this.PlannerFormBuilder.value.Synopsis as string,
+      leaders: this.name,
+    }
+    console.log(data)
+    this.plannerForm.emit(data)
+    this.PlannerFormBuilder.reset();
+    localStorage.setItem('leadernames', '')
+    this.name=[];
+  }
 }
-
-

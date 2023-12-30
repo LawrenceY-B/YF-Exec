@@ -1,6 +1,6 @@
 <main class="planner">
   <section class="planner__Box">
-    <table cdk-table [dataSource]="ELEMENT_DATA">
+    <table cdk-table [dataSource]="plannerReceiver">
       <!-- Date Column -->
       <ng-container cdkColumnDef="Date">
         <th cdk-header-cell *cdkHeaderCellDef>Date</th>
@@ -29,7 +29,7 @@
       <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <div>
-      <app-activities></app-activities>
+      <app-activities (plannerForm)="receivePlanner($event)"></app-activities>
       
     </div>
   </section>

@@ -1,7 +1,7 @@
 export interface IActivity{
     date: Date;
     activity: string;
-    leaders: string;
+    leaders: string[];
     synopsis: string;
   }
 export interface IProgramInfo {

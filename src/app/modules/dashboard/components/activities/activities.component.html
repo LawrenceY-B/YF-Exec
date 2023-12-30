@@ -40,22 +40,24 @@
   </div>
   <div class="formField">
     <label for="Leaders">Leaders</label>
-    <div
-      *ngFor="let leader of leaderForms.controls; let i = index"
-      [formGroupName]="i"
-    >
-      <div class="inputBox">
+      <span *ngFor="let item of name">
+        <p>{{item}}</p>
+      </span>
+      <div class="inputBox" [formGroup]="LeaderFormBuilder">
         <input type="text" placeholder="Leader" formControlName="Leaders" />
         <button class="addLeader" (click)="addLeader()">
           <img src="assets/svgs/plus.svg" alt="" srcset="" />
         </button>
-      </div>
+  
     </div>
   </div>
 
   <div class="formField">
     <label for="Synopsis">Synopsis</label>
-    <textarea placeholder="Synopsis"></textarea>
+    <textarea placeholder="Synopsis" formControlName="Synopsis"></textarea>
   </div>
+  <button class="send"[disabled]="!PlannerFormBuilder.valid || !LeaderFormBuilder.valid " (click)="submitPlanner()">
+    Save
+    <img src="assets/svgs/send.svg" alt="submit" srcset="" />
+  </button>
 </form>
-<br /><br /><br /><br /><br />
