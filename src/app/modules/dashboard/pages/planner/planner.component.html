@@ -1,36 +1,44 @@
 <main class="planner">
   <section class="planner__Box">
-    <table cdk-table [dataSource]="plannerReceiver">
-      <!-- Date Column -->
-      <ng-container cdkColumnDef="Date">
-        <th cdk-header-cell *cdkHeaderCellDef>Date</th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.date | date }}</td>
-      </ng-container>
+    <div class="plannaer__Box__table">
+      <table cdk-table [dataSource]="dataSource">
+        <!-- Date Column -->
+        <ng-container cdkColumnDef="Date">
+          <th cdk-header-cell *cdkHeaderCellDef>Date</th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.date | date }}</td>
+        </ng-container>
 
-      <!-- Activity Column -->
-      <ng-container cdkColumnDef="Activity">
-        <th cdk-header-cell *cdkHeaderCellDef>Activity</th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.activity }}</td>
-      </ng-container>
+        <!-- Activity Column -->
+        <ng-container cdkColumnDef="Activity">
+          <th cdk-header-cell *cdkHeaderCellDef>Activity</th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.activity }}</td>
+        </ng-container>
 
-      <!-- Leaders Column -->
-      <ng-container cdkColumnDef="Leaders">
-        <th cdk-header-cell *cdkHeaderCellDef>Leaders</th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.leaders }}</td>
-      </ng-container>
+        <!-- Leaders Column -->
+        <ng-container cdkColumnDef="Leaders">
+          <th cdk-header-cell *cdkHeaderCellDef>Leaders</th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.leaders }}</td>
+        </ng-container>
 
-      <!-- Synopsis Column -->
-      <ng-container cdkColumnDef="Synopsis">
-        <th cdk-header-cell *cdkHeaderCellDef>Synopsis</th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.synopsis }}</td>
-      </ng-container>
+        <!-- Synopsis Column -->
+        <ng-container cdkColumnDef="Synopsis">
+          <th cdk-header-cell *cdkHeaderCellDef>Synopsis</th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.synopsis }}</td>
+        </ng-container>
 
-      <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-      <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+        <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[10, 15, 20]"
+        showFirstLastButtons
+        aria-label="Select page of youth activities"
+      >
+      </mat-paginator>
+    </div>
+
     <div>
       <app-activities (plannerForm)="receivePlanner($event)"></app-activities>
-      
     </div>
   </section>
 </main>

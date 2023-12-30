@@ -96,6 +96,9 @@ body {
   --newplanborder: hsl(225, 7%, 22%);
   --newplanBoxShadow: 0px 2px 4px -2px rgba(255, 255, 255, 0.06),
   0px 4px 8px -2px rgba(255, 255, 255, 0.1);
+  --tr-even:hsl(240, 20%, 19%);
+  --paginator-background:hsl(236, 22%, 59%);
+
 }
 .light-theme {
   --background: hsl(0, 0%, 98%);
@@ -114,7 +117,15 @@ body {
   --newplanborder: hsl(220, 17%, 93%);
   --newplanBoxShadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
     0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+    --tr-even:hsl(240, 23%, 95%);
+    --paginator-background:hsl(240, 23%, 95%);
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "M Regular", "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "M Regular", "Helvetica Neue", sans-serif; 
+  ::placeholder{
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+}
+

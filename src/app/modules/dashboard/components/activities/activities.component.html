@@ -13,7 +13,7 @@
     </ng-container>
   </div>
   <form [formGroup]="ActivityFormBuilder" (submit)="Submit()">
-    <input type="text" formControlName="Activity" />
+    <input type="text" formControlName="Activity" placeholder="Enter new activity" />
     <button class="submit">
       <img src="assets/svgs/plus.svg" alt="" srcset="" />
     </button>
@@ -36,7 +36,7 @@
     (drop)="drop($event, PlannerFormBuilder.get('Activity')!)"
   >
     <label for="Activity">Activity</label>
-    <input type="text" [value]="" formControlName="Activity" />
+    <input type="text" [value]="" formControlName="Activity" placeholder="Drag an activity here"/>
   </div>
   <div class="formField">
     <label for="Leaders">Leaders</label>

@@ -45,8 +45,10 @@
         input{
             height: 20px;
             border: 1px solid #a7a7a7;
-            border-radius: 2px;
-            padding: 2px;
+            padding: 8px;
+            background-color: var(--background);
+            color: var(--text-color);
+            border-radius: 4px;
         }
         input:focus{
             outline: none;
@@ -90,9 +92,14 @@
     padding: 10px 25px;
 }
 .plannerform{
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     gap: 10px;
+    h1{
+        font-size: 1.2rem;
+        font-family: "M Bold";
+    }
     .formField{
         display: flex;
         flex-direction: column;
@@ -105,6 +112,9 @@
             border: 1px solid #a7a7a7;
             border-radius: 2px;
             padding: 8px;
+            background-color: var(--background);
+            color: var(--text-color);
+            border-radius: 4px;
         }
         input:focus{
             outline: none;

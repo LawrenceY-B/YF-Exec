@@ -56,7 +56,6 @@ export class ActivitiesComponent implements OnInit {
 
       days.map((day) => this.weeks.push(day));
     }
-    console.log(this.weeks);
   }
   PlannerFormBuilder = this.formBuilder.group({
     Date: ['', Validators.required],
