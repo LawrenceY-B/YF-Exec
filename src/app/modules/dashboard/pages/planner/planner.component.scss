@@ -1,23 +1,97 @@
-.planner{
+.planner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100dvw;
+  height: 100%;
+  &__Box {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100dvw;
-    &__Box{
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        width: 100%;
-        padding: 20px;
-        &__table{
-          width: 100%;
-        } 
+    justify-content: space-around;
+    gap: 40px;
+    width: 100%;
+    padding: 20px;
+    &__table {
+      width: 100%;
     }
-
+  }
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  height: fit-content;
+  color: var(--text-color);
+  border: 2px solid var(--newplanborder);
+  box-shadow: var(--newplanBoxShadow);
 
-table{
+  tr:nth-child(even) {
+    background: var(--tr-even);
+  }
+}
+
+th {
+  padding: 15px;
+  letter-spacing: 0.005em;
+  text-align: left;
+  font-family: "M Medium";
+  border-bottom: 1px solid var(--newplanborder);
+}
+
+th:nth-child(1) {
+  display: flex;
+  justify-content: flex-start;
+  
+}
+
+td {
+  padding: 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+mat-paginator {
+  background-color: var(--paginator-background);
+  color: var(--text-color);
+  font-family: "M Medium";
+  font-size: 12px;
+  border-radius: 5px;
+  fill: var(--text-color);
+}
+//   ul{
+// list-style: none;
+// display: flex;
+// flex-direction: row;
+// flex-wrap: wrap;
+// li{
+//     cursor: pointer;
+
+//     padding: 5px;
+//     border-radius: 5px;
+//     &:hover{
+//         background-color: #7638FF;
+//         color: #fff;
+//     }
+// }}
+
+@media only screen and (max-width: 468px) {
+  .planner {
+    background-color: var(--background);
+    height: 100%;
+    &__Box {
+      flex-direction: column;
+      gap: 20px;
+      padding: 10px;
+      &__table {
+        width: 90%;
+      }
+      &__activity{
+        display: none;
+      }
+    }
+  }
+
+  table {
     width: 100%;
     border-collapse: collapse;
     height: fit-content;
@@ -25,61 +99,36 @@ table{
     border: 2px solid var(--newplanborder);
     box-shadow: var(--newplanBoxShadow);
 
-    tr:nth-child(even){
+    tr:nth-child(even) {
       background: var(--tr-even);
-
     }
-  
-  }
-  
-  
-  th{
-    padding: 15px;
-    letter-spacing: 0.005em;
-    text-align: left;
-    font-family: "M Medium";
-    border-bottom: 1px solid var(--newplanborder);
 
-  
-  }
-  
-  th:nth-child(1){
-    display: flex;
-    justify-content: flex-start;
-    
-  }
-  
-  td{
- 
+    td {
       padding: 15px;
       font-size: 12px;
       cursor: pointer;
-    
+    }
+
+    th, td {
+      width: 100%;
+      box-sizing: border-box;
+      display: block;
+    }
+
+    th {
+      display: none;
+    }
+
+    td:nth-child(2) {
+      display: flex;
+      justify-content: flex-start;
+      font-family: "M Medium";
+    }
+
+    tr td:nth-child(3),
+    tr td:nth-child(4) {
+      display: none;
+    }
   }
-  mat-paginator{
-    background-color: var(--paginator-background);
-    color: var(--text-color);
-    font-family: "M Medium";
-    font-size: 12px;
-    border-radius: 5px;
-    fill: var(--text-color);
-  }
-//   ul{
-    // list-style: none;
-    // display: flex;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-    // li{
-    //     cursor: pointer;
+}
 
-    //     padding: 5px;
-    //     border-radius: 5px;
-    //     &:hover{
-    //         background-color: #7638FF;
-    //         color: #fff;
-    //     }
-    // }}
-  
-
-
-  

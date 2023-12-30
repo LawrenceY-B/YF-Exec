@@ -129,3 +129,8 @@ body { margin: 0; font-family: "M Regular", "Helvetica Neue", sans-serif;
   }
 }
 
+@media (max-width: 468px) {
+body{
+  overflow-y: scroll;
+}
+}
