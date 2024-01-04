@@ -13,6 +13,7 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { PaginatorService } from 'src/app/shared/services/pagination.service';
 
 @Component({
   selector: 'app-planner',
@@ -21,15 +22,14 @@ import jsPDF from 'jspdf';
 })
 export class PlannerComponent implements OnInit, AfterViewInit {
   plannerReceiver: IActivity[] = [];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('contentToExport', { static: false }) contentToExport!: ElementRef;
 
-  constructor(private router: Router, private fb: NonNullableFormBuilder) {}
+  constructor(private router: Router, public paginatorService:PaginatorService) {}
   displayedColumns: string[] = ['Date', 'Activity', 'Leaders', 'Synopsis'];
-  dataSource!: MatTableDataSource<any>;
 
   ngOnInit(): void {
     const data = localStorage.getItem('planner');
+    this.paginatorService.setItemsPerPage(6)
     if (data === null) {
       console.log('no data');
       this.router.navigate(['/dashboard/empty']);
@@ -41,10 +41,10 @@ export class PlannerComponent implements OnInit, AfterViewInit {
     }
 
     this.plannerReceiver = JSON.parse(detail as string) as IActivity[];
-    this.dataSource = new MatTableDataSource(this.plannerReceiver);
+    this.updatePaginator(this.plannerReceiver)
+
   }
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
   }
   receivePlanner(event: IActivity) {
     console.log(event);
@@ -55,11 +55,11 @@ export class PlannerComponent implements OnInit, AfterViewInit {
     this.plannerReceiver.push(event);
     console.table(this.plannerReceiver);
     localStorage.setItem('timetable', JSON.stringify(this.plannerReceiver));
-    this.dataSource = new MatTableDataSource([...this.plannerReceiver]);
-    this.dataSource.paginator = this.paginator;
-    console.log(this.plannerReceiver);
+    this.plannerReceiver;
   }
-
+ updatePaginator(value: IActivity[]) {
+    this.paginatorService.setData(value);
+  }
   exportAsPDF() {
     const content = this.contentToExport.nativeElement;
     html2canvas(content).then((canvas) => {

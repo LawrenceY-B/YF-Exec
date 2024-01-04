@@ -13,7 +13,9 @@
     padding: 20px;
     &__table {
       width: 60%;
-      padding: 0px 20px;
+      // padding: 0px 20px;
+      border: 2px solid var(--newplanborder);
+      box-shadow: var(--newplanBoxShadow);
     }
   }
 }
@@ -23,8 +25,7 @@ table {
   border-collapse: collapse;
   height: fit-content;
   color: var(--text-color);
-  border: 2px solid var(--newplanborder);
-  box-shadow: var(--newplanBoxShadow);
+ 
   background: var(--background);
   tr:nth-child(even) {
     background: var(--tr-even);
