@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { PlannerComponent } from './pages/planner/planner.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { NewplanComponent } from './components/newplan/newplan.component';
+import { MinutesComponent } from './pages/minutes/minutes.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,9 @@ const routes: Routes = [
       {path:'newplan', component:NewplanComponent}
     
     ],
+  },
+  {
+    path:'minutes', component: MinutesComponent
   },
   { path: 'login', pathMatch: 'full', redirectTo: '/' },
   { path: '**', pathMatch: 'prefix', redirectTo: 'welcome' },

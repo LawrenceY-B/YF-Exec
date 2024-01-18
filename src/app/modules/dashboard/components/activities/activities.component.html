@@ -36,7 +36,7 @@
     (drop)="drop($event, PlannerFormBuilder.get('Activity')!)"
   >
     <label for="Activity">Activity</label>
-    <input type="text" [value]="" formControlName="Activity" placeholder="Drag an activity here"/>
+    <input type="text" [value]="" formControlName="Activity" placeholder="Drag item from Activities 👆🏽"/>
   </div>
   <div class="formField">
     <label for="Leaders">Leaders</label>
@@ -44,7 +44,7 @@
         <p>{{item}}</p>
       </span>
       <div class="inputBox" [formGroup]="LeaderFormBuilder">
-        <input type="text" placeholder="Leader" formControlName="Leaders" />
+        <input type="text" placeholder="Add New Leader" formControlName="Leaders" />
         <button class="addLeader" (click)="addLeader()">
           <img src="assets/svgs/plus.svg" alt="" srcset="" />
         </button>
@@ -54,7 +54,7 @@
 
   <div class="formField">
     <label for="Synopsis">Synopsis</label>
-    <textarea placeholder="Synopsis" formControlName="Synopsis"></textarea>
+    <textarea placeholder="Enter Synopsis Here" formControlName="Synopsis"></textarea>
   </div>
   <button class="send"[disabled]="!PlannerFormBuilder.valid || !LeaderFormBuilder.valid " (click)="submitPlanner()">
     Save
