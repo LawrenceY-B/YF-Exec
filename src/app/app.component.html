@@ -1,9 +1,0 @@
-<main  [ngClass]="{'dark-theme': themeService.isDarkTheme, 'light-theme': !themeService.isDarkTheme}">
-  <div>
-    <img (click)="switchTheme()" *ngIf="themeService.isDarkTheme" src="assets/svgs/sunny.svg" alt="">
-    <img (click)="switchTheme()" *ngIf="!themeService.isDarkTheme" src="assets/svgs/dark.svg" alt="">
-    </div>
-  <router-outlet></router-outlet>
-</main>
-
-
