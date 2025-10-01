@@ -4,20 +4,15 @@ const getCampYear = () => {
   const currentYear = new Date().getFullYear();
   return currentYear + 1;
 };
-export default async function getQuestions(): Promise<
-  IGetQuestionsResponse | never
-> {
+export default async function getQuestions(): Promise<IGetQuestionsResponse | never> {
   try {
-    const campYear = getCampYear() + 1;
-    const res = await fetch(
-      `http://localhost:8080/api/camp/get-questions/${campYear}/camp-registration`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const campYear = getCampYear();
+    const res = await fetch(`http://localhost:8080/api/camp/get-questions/${campYear}/camp-registration`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
     if (!res.ok) {
       throw new Error("Failed to fetch camp questions");
     }
