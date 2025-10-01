@@ -39,3 +39,44 @@ export interface Field {
   description?: string;
   link?: string;
 }
+
+export interface ICampRegistration {
+  formId: string;
+  year: number;
+  details: Details;
+}
+
+export interface Details {
+  firstName: string;
+  surname: string;
+  otherNames: string;
+  gender: string;
+  age: number;
+  phoneNumber: string;
+  whatsappNumber: string;
+  dob: string;
+  email: string;
+  firstTime: string;
+  availability: string[];
+  conditions: string;
+  allergies: string;
+  emergencyName: string;
+  emergencyRelation: string;
+  emergencyContact: string;
+  expectation: string;
+  bibleQuestion: string;
+  homeChurch: string;
+  occupation: string;
+  workplace: string;
+  residence: string;
+  cellGroup: string[];
+  bibleStudyGroupName: string;
+  careCellGroupName: string;
+  areaFellowshipName: string;
+  isMember: string;
+  declaration: string[];
+  comments: string;
+  support: string;
+  supportAmount: string;
+  whatsappGroup: string;
+}

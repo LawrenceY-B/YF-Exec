@@ -8,7 +8,7 @@ export default async function getQuestions(): Promise<
   IGetQuestionsResponse | never
 > {
   try {
-    const campYear = getCampYear();
+    const campYear = getCampYear() + 1;
     const res = await fetch(
       `http://localhost:8080/api/camp/get-questions/${campYear}/camp-registration`,
       {

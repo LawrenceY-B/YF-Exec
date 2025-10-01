@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import CampRegistrationContent from "./_components/CampRegistrationContent";
 
 export async function generateMetadata() {
@@ -11,14 +10,8 @@ export async function generateMetadata() {
 
 export default function CampQuestion() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen w-screen items-center justify-center">
-          Loading...
-        </div>
-      }
-    >
+    <>
       <CampRegistrationContent />
-    </Suspense>
+    </>
   );
 }
