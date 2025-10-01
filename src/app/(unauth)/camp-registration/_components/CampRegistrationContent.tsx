@@ -1,5 +1,6 @@
 "use client";
 
+import CampStepper from "@/components/camp-stepper";
 import { ErrorDialog } from "@/components/dialogs/error-dialog";
 import { Separator } from "@/components/ui/separator";
 import { useCampStore } from "@/store/camp.store";
@@ -9,8 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CampRegistrationContent() {
-  const { campQuestionData, loading, error, fetchCampQuestions } =
-    useCampStore();
+  const { campQuestionData, loading, error, fetchCampQuestions } = useCampStore();
 
   const [open, setOpen] = useState(false);
 
@@ -55,14 +55,12 @@ export default function CampRegistrationContent() {
           />
         </Link>
         <span className="flex flex-col items-start">
-          <h1 className="text-base sm:text-lg md:text-xl font-bold">
-            {campQuestionData?.formTitle}
-          </h1>
+          <h1 className="text-base font-bold sm:text-lg md:text-xl">{campQuestionData?.formTitle}</h1>
         </span>
       </nav>
 
-      <main className="bg-[var(--background)] no-scrollbar rounded-2xl grid sm:grid-cols-[30%_1fr] lg:grid-cols-[20%_1fr] p-1 sm:p-4 h-screen w-full flex-col overflow-x-hidden shadow-md">
-        <div>Stepper goes here</div>
+      <main className="no-scrollbar flex h-screen w-full flex-col gap-4 overflow-x-hidden rounded-2xl bg-[var(--background)] p-3.5 shadow-md sm:grid sm:grid-cols-[40%_1fr] sm:p-4 lg:grid-cols-[30%_1fr]">
+        <CampStepper />
         <section>
           <h1 className="text-xl font-bold">{campQuestionData?.formTitle}</h1>
           <p className="">{campQuestionData?.description}</p>
