@@ -6,8 +6,12 @@ const getCampYear = () => {
 };
 export default async function getQuestions(): Promise<IGetQuestionsResponse | never> {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) {
+      throw new Error("API URL is not defined");
+    }
     const campYear = getCampYear();
-    const res = await fetch(`http://localhost:8080/api/camp/get-questions/${campYear}/camp-registration`, {
+    const res = await fetch(`${apiUrl}/camp/get-questions/${campYear}/camp-registration`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
