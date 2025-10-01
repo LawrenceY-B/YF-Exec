@@ -23,17 +23,7 @@ export interface Section {
 export interface Field {
   id: string;
   label: string;
-  type:
-    | "text"
-    | "email"
-    | "tel"
-    | "number"
-    | "date"
-    | "datetime"
-    | "textarea"
-    | "radio"
-    | "multiselect"
-    | "checkbox";
+  type: "text" | "email" | "tel" | "number" | "date" | "datetime" | "textarea" | "radio" | "multiselect" | "checkbox";
   required?: boolean;
   options?: string[];
   description?: string;
