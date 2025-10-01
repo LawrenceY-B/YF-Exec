@@ -3,6 +3,7 @@
 import CampStepper from "@/components/camp-stepper";
 import { ErrorDialog } from "@/components/dialogs/error-dialog";
 import { Separator } from "@/components/ui/separator";
+import { useCampStepperStore } from "@/store/camp-stepper.store";
 import { useCampStore } from "@/store/camp.store";
 
 import Image from "next/image";
@@ -11,12 +12,19 @@ import { useEffect, useState } from "react";
 
 export default function CampRegistrationContent() {
   const { campQuestionData, loading, error, fetchCampQuestions } = useCampStore();
+  const { currentSection, setCurrentSection } = useCampStepperStore();
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetchCampQuestions();
   }, [fetchCampQuestions]);
+
+  useEffect(() => {
+    if (campQuestionData && !currentSection) {
+      setCurrentSection();
+    }
+  }, [campQuestionData, currentSection, setCurrentSection]);
 
   useEffect(() => {
     if (error || !campQuestionData) {
@@ -65,12 +73,15 @@ export default function CampRegistrationContent() {
           <h1 className="text-xl font-bold">{campQuestionData?.formTitle}</h1>
           <p className="">{campQuestionData?.description}</p>
           <Separator className="my-4" />
-          {campQuestionData?.sections.map((section) => (
-            <div key={section.id}>
-              <h2 className="text-md font-medium">{section.title}</h2>
-              <p className="text-sm italic">{section.description}</p>
-            </div>
-          ))}
+          {currentSection ? (
+            <>
+              <h2 className="mb-2 text-lg font-semibold">{currentSection.title}</h2>
+              <p className="mb-4">{currentSection.description}</p>
+              {/* Render questions for the current section here */}
+            </>
+          ) : (
+            <div>Select a section to begin the registration process.</div>
+          )}
         </section>
       </main>
     </>
