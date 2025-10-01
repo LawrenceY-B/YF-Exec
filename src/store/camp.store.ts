@@ -1,8 +1,4 @@
-import {
-  CampForm,
-  ICampRegistration,
-  IGetQuestionsResponse,
-} from "@/models/camp-form";
+import { CampForm, ICampRegistration, IGetQuestionsResponse } from "@/models/camp-form";
 import getQuestions from "@/services/api/camp.api";
 import { toast } from "sonner";
 import { create } from "zustand";
@@ -46,8 +42,7 @@ export const useCampStore = create<State & Actions>((set) => ({
         campYear: response.data.year,
       });
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to load camp registration";
+      const errorMessage = err instanceof Error ? err.message : "Failed to load camp registration";
 
       toast.error(errorMessage);
       set({
@@ -58,8 +53,7 @@ export const useCampStore = create<State & Actions>((set) => ({
   },
   clearError: () => set({ error: null }),
 
-  setCampSubmissionData: (data: ICampRegistration) =>
-    set({ campSubmissionData: data }),
+  setCampSubmissionData: (data: ICampRegistration) => set({ campSubmissionData: data }),
 
   reset: () =>
     set({

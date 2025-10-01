@@ -39,9 +39,7 @@ export function ErrorDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           {showCancel && <AlertDialogCancel>{cancelText}</AlertDialogCancel>}
-          {onRetry && (
-            <AlertDialogAction onClick={onRetry}>{retryText}</AlertDialogAction>
-          )}
+          {onRetry && <AlertDialogAction onClick={onRetry}>{retryText}</AlertDialogAction>}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

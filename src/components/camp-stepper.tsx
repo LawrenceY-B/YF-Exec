@@ -20,7 +20,7 @@ const StepButton = ({ stepNumber, title, isActive, isCompleted, isDisabled, onCl
     if (isCompleted) {
       return "bg-green-500 hover:bg-green-600";
     }
-    return "bg-gray-400 hover:bg-gray-500";
+    return "bg-gray-400 dark:bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600";
   };
 
   return (
@@ -35,7 +35,7 @@ const StepButton = ({ stepNumber, title, isActive, isCompleted, isDisabled, onCl
         {isCompleted ? <CheckIcon className="h-4 w-4" /> : <span>{stepNumber}</span>}
       </button>
 
-      <span className="absolute top-1/2 left-12 hidden -translate-y-1/2 text-sm font-medium whitespace-nowrap text-gray-700 sm:block">
+      <span className="absolute top-1/2 left-12 hidden -translate-y-1/2 text-sm font-medium whitespace-nowrap text-gray-700 sm:block dark:text-gray-200">
         {title}
       </span>
     </div>
