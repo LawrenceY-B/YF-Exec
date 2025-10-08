@@ -10,16 +10,27 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import generateZodSchema from "@/lib/form-schema-generator";
 import { cn } from "@/lib/utils";
-import { Details, Field } from "@/models/camp-form";
+import { CELL_GROUP, Details, Field } from "@/models/camp-form";
 import { useCampContext } from "@/services/context/camp-form.context";
 import { useCampStepperStore } from "@/store/camp-stepper.store";
 import { useCampStore } from "@/store/camp.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+//calculate age from date of birth
+export const calculateAge = (dateOfBirth: Date): number => {
+  const today = new Date();
+  let age = today.getFullYear() - dateOfBirth.getFullYear();
+  const monthDiff = today.getMonth() - dateOfBirth.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dateOfBirth.getDate())) {
+    age--;
+  }
+  return age;
+};
 
 export default function CampForm() {
   const { campQuestionData } = useCampStore();
@@ -69,9 +80,81 @@ export default function CampForm() {
     defaultValues,
   });
 
+  const dobField = form.watch("dob");
+  const allergiesField = form.watch("allergies");
+  const conditionsField = form.watch("conditions");
+  const cellGroupField = form.watch("cellGroup");
+  const homeChurchField = form.watch("homeChurch");
+
+  const [hideAllergyDetails, setHideAllergyDetails] = useState(true);
+  const [hideConditionDetails, setHideConditionDetails] = useState(true);
+  const [hideCellGroupDetails, setHideCellGroupDetails] = useState<Record<CELL_GROUP, boolean> | null>(null);
+  const [hideOtherChurchDetails, setHideOtherChurchDetails] = useState(true);
+
+  useEffect(() => {
+    if (dobField && typeof dobField === "string" && dobField.trim() !== "") {
+      try {
+        const age = calculateAge(new Date(dobField));
+        const currentAge = form.getValues("age");
+        if (currentAge !== age.toString()) {
+          form.setValue("age", age.toString());
+        }
+      } catch (error) {
+        console.error("Error calculating age:", error);
+      }
+    }
+
+    if (allergiesField === "Yes") {
+      setHideAllergyDetails(false);
+      const allergyDetails = form.getValues("allergyDetails");
+      if (!allergyDetails || (typeof allergyDetails === "string" && allergyDetails.trim() === "")) {
+        form.setValue("allergyDetails", "");
+      }
+    } else {
+      setHideAllergyDetails(true);
+      form.setValue("allergyDetails", "");
+    }
+
+    if (conditionsField === "Yes") {
+      setHideConditionDetails(false);
+    } else {
+      setHideConditionDetails(true);
+      form.setValue("conditions", "");
+    }
+
+    if (homeChurchField === "Other") {
+      setHideOtherChurchDetails(false);
+    } else {
+      setHideOtherChurchDetails(true);
+      form.setValue("otherChurch", "");
+    }
+    const cellGroupFieldMapping = {
+      [CELL_GROUP.BIBLE_STUDY]: "bibleStudyGroupName",
+      [CELL_GROUP.CARE_CELL]: "careCellGroupName",
+      [CELL_GROUP.AREA_FELLOWSHIP]: "areaFellowshipName",
+    } as const;
+
+    const hasSelectedCellGroups = cellGroupField && Array.isArray(cellGroupField) && cellGroupField.length > 0;
+
+    const newHideState: Record<CELL_GROUP, boolean> = {
+      [CELL_GROUP.BIBLE_STUDY]: !hasSelectedCellGroups || !cellGroupField.includes(CELL_GROUP.BIBLE_STUDY),
+      [CELL_GROUP.CARE_CELL]: !hasSelectedCellGroups || !cellGroupField.includes(CELL_GROUP.CARE_CELL),
+      [CELL_GROUP.AREA_FELLOWSHIP]: !hasSelectedCellGroups || !cellGroupField.includes(CELL_GROUP.AREA_FELLOWSHIP),
+    };
+
+    setHideCellGroupDetails(newHideState);
+
+    Object.entries(cellGroupFieldMapping).forEach(([group, fieldKey]) => {
+      if (newHideState[group as CELL_GROUP]) {
+        form.setValue(fieldKey, "");
+      }
+    });
+  }, [dobField, allergiesField, conditionsField, cellGroupField, homeChurchField, form]);
+
   const renderField = useCallback(
     (field: Field) => {
       const fieldName = field.id;
+      const isFieldRequired = field.required;
 
       if (fieldName === "timestamp") {
         return null;
@@ -80,6 +163,26 @@ export default function CampForm() {
       switch (field.type) {
         case "text":
         case "email":
+          const shouldHideTextField =
+            (fieldName === "allergyDetails" && hideAllergyDetails) ||
+            (fieldName === "conditionDetails" && hideConditionDetails) ||
+            (fieldName === "otherChurch" && hideOtherChurchDetails) ||
+            (fieldName === "bibleStudyGroupName" && hideCellGroupDetails?.[CELL_GROUP.BIBLE_STUDY]) ||
+            (fieldName === "careCellGroupName" && hideCellGroupDetails?.[CELL_GROUP.CARE_CELL]) ||
+            (fieldName === "areaFellowshipName" && hideCellGroupDetails?.[CELL_GROUP.AREA_FELLOWSHIP]);
+
+          if (shouldHideTextField) {
+            return null;
+          }
+
+          const isTextFieldRequired =
+            fieldName === "allergyDetails" ||
+            fieldName === "conditionDetails" ||
+            fieldName === "otherChurch" ||
+            fieldName === "bibleStudyGroupName" ||
+            fieldName === "careCellGroupName" ||
+            fieldName === "areaFellowshipName";
+
           return (
             <FormField
               key={fieldName}
@@ -89,6 +192,7 @@ export default function CampForm() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel className="text-left" htmlFor={`input-${fieldName}`}>
                     {field.label}
+                    {isTextFieldRequired || isFieldRequired ? <span className="text-red-500">*</span> : null}
                   </FormLabel>
                   <FormControl className="w-full">
                     <Input
@@ -116,6 +220,7 @@ export default function CampForm() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel className="text-left" htmlFor={`tel-${fieldName}`}>
                     {field.label}
+                    {isFieldRequired ? <span className="text-red-500">*</span> : null}
                   </FormLabel>
                   <FormControl className="w-full">
                     <PhoneInput
@@ -144,6 +249,7 @@ export default function CampForm() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel className="text-left" htmlFor={`textarea-${fieldName}`}>
                     {field.label}
+                    {isFieldRequired ? <span className="text-red-500">*</span> : null}
                   </FormLabel>
                   <FormControl className="w-full">
                     <Textarea
@@ -161,6 +267,12 @@ export default function CampForm() {
           );
 
         case "number":
+          const isAgeField = fieldName === "age";
+          const hasDobInSection = campQuestionData?.sections?.some((section) =>
+            section.fields.some((f) => f.id === "dob")
+          );
+          const isCalculatedAge = isAgeField && hasDobInSection;
+
           return (
             <FormField
               key={fieldName}
@@ -170,6 +282,7 @@ export default function CampForm() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel className="text-left" htmlFor={`number-${fieldName}`}>
                     {field.label}
+                    {isFieldRequired ? <span className="text-red-500">*</span> : null}
                   </FormLabel>
                   <FormControl className="w-full">
                     <Input
@@ -178,9 +291,16 @@ export default function CampForm() {
                       placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
                       {...formField}
                       value={formField.value as string}
+                      readOnly={isCalculatedAge}
+                      className={cn(isCalculatedAge && "bg-muted cursor-not-allowed")}
                     />
                   </FormControl>
                   {field.description && <FormDescription className="text-left">{field.description}</FormDescription>}
+                  {isCalculatedAge && (
+                    <FormDescription className="text-left text-xs">
+                      This field is automatically calculated from your date of birth
+                    </FormDescription>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
@@ -195,7 +315,10 @@ export default function CampForm() {
               name={fieldName}
               render={({ field: formField }) => (
                 <FormItem className="flex flex-col items-start">
-                  <FormLabel className="text-left">{field.label}</FormLabel>
+                  <FormLabel className="text-left">
+                    {field.label}
+                    {isFieldRequired ? <span className="text-red-500">*</span> : null}
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -240,7 +363,9 @@ export default function CampForm() {
               name={fieldName}
               render={({ field: formField }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel className="text-left">{field.label}</FormLabel>
+                  <FormLabel className="text-left">
+                    {field.label} {isFieldRequired ? <span className="text-red-500">*</span> : null}
+                  </FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={formField.onChange}
@@ -273,7 +398,9 @@ export default function CampForm() {
               name={fieldName}
               render={({ field: formField }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel className="text-left">{field.label}</FormLabel>
+                  <FormLabel className="text-left">
+                    {field.label} {isFieldRequired ? <span className="text-red-500">*</span> : null}
+                  </FormLabel>
                   <FormControl>
                     <div className="flex flex-col space-y-2">
                       {field.options?.map((option) => (
@@ -309,7 +436,9 @@ export default function CampForm() {
               name={fieldName}
               render={({ field: formField }) => (
                 <FormItem className="flex flex-col items-start">
-                  <FormLabel className="text-left">{field.label}</FormLabel>
+                  <FormLabel className="text-left">
+                    {field.label} {isFieldRequired ? <span className="text-red-500">*</span> : null}
+                  </FormLabel>
                   <FormControl className="w-full">
                     <Input
                       placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
@@ -325,7 +454,14 @@ export default function CampForm() {
           );
       }
     },
-    [form.control]
+    [
+      form.control,
+      campQuestionData?.sections,
+      hideAllergyDetails,
+      hideConditionDetails,
+      hideOtherChurchDetails,
+      hideCellGroupDetails,
+    ]
   );
 
   if (!campQuestionData) {
@@ -350,14 +486,19 @@ export default function CampForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col items-start space-y-8"
+        className="flex flex-col items-start gap-5"
         id="camp-registration-form"
       >
-        {currentSection.fields.map((field) => (
-          <div key={field.id} className="w-full">
-            {renderField(field)}
-          </div>
-        ))}
+        {currentSection.fields.map((field) => {
+          const renderedField = renderField(field);
+          if (!renderedField) return null;
+
+          return (
+            <div key={field.id} className="w-full">
+              {renderedField}
+            </div>
+          );
+        })}
         <Button type="submit" className="w-full">
           {currentStep < totalSteps - 1 ? "Next" : "Submit"}
         </Button>

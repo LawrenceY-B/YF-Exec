@@ -95,6 +95,93 @@ export default function generateZodSchema(config: CampForm | null) {
     });
   });
 
-  const finalSchema = z.object(schemaObject);
+  const baseSchema = z.object(schemaObject);
+
+  const finalSchema = baseSchema
+    .refine(
+      (data) => {
+        if (data.allergies === "Yes") {
+          return data.allergyDetails && typeof data.allergyDetails === "string" && data.allergyDetails.trim() !== "";
+        }
+        return true;
+      },
+      {
+        message: "Please provide allergy details",
+        path: ["allergyDetails"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.conditions === "Yes") {
+          return (
+            data.conditionDetails && typeof data.conditionDetails === "string" && data.conditionDetails.trim() !== ""
+          );
+        }
+        return true;
+      },
+      {
+        message: "Please provide condition details",
+        path: ["conditionDetails"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.homeChurch === "Other") {
+          return data.otherChurch && typeof data.otherChurch === "string" && data.otherChurch.trim() !== "";
+        }
+        return true;
+      },
+      {
+        message: "Please specify your church",
+        path: ["otherChurch"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.cellGroup && Array.isArray(data.cellGroup) && data.cellGroup.includes("Bible Study")) {
+          return (
+            data.bibleStudyGroupName &&
+            typeof data.bibleStudyGroupName === "string" &&
+            data.bibleStudyGroupName.trim() !== ""
+          );
+        }
+        return true;
+      },
+      {
+        message: "Please provide Bible Study group name",
+        path: ["bibleStudyGroupName"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.cellGroup && Array.isArray(data.cellGroup) && data.cellGroup.includes("Care Cell")) {
+          return (
+            data.careCellGroupName && typeof data.careCellGroupName === "string" && data.careCellGroupName.trim() !== ""
+          );
+        }
+        return true;
+      },
+      {
+        message: "Please provide Care Cell group name",
+        path: ["careCellGroupName"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.cellGroup && Array.isArray(data.cellGroup) && data.cellGroup.includes("Area Fellowship")) {
+          return (
+            data.areaFellowshipName &&
+            typeof data.areaFellowshipName === "string" &&
+            data.areaFellowshipName.trim() !== ""
+          );
+        }
+        return true;
+      },
+      {
+        message: "Please provide Area Fellowship name",
+        path: ["areaFellowshipName"],
+      }
+    );
+
   return finalSchema;
 }
