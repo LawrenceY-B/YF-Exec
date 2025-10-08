@@ -1,4 +1,5 @@
 import { CampForm } from "@/models/camp-form";
+import { isValidPhoneNumber } from "react-phone-number-input";
 import { z } from "zod";
 
 export default function generateZodSchema(config: CampForm | null) {
@@ -85,6 +86,9 @@ export default function generateZodSchema(config: CampForm | null) {
         }
       } else if (field.type !== "multiselect" && field.type !== "checkbox") {
         fieldSchema = fieldSchema.optional().or(z.literal(""));
+      }
+      if (field.type === "tel") {
+        fieldSchema = z.string().refine(isValidPhoneNumber, { message: "Invalid phone number" }).or(z.literal(""));
       }
 
       schemaObject[field.id] = fieldSchema;
