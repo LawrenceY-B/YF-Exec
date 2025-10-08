@@ -3,12 +3,14 @@
 import CampStepper from "@/components/camp-stepper";
 import { ErrorDialog } from "@/components/dialogs/error-dialog";
 import { Separator } from "@/components/ui/separator";
+import { CampFormProvider } from "@/services/context/camp-form.context";
 import { useCampStepperStore } from "@/store/camp-stepper.store";
 import { useCampStore } from "@/store/camp.store";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import CampForm from "./CampForm";
 
 export default function CampRegistrationContent() {
   const { campQuestionData, loading, error, fetchCampQuestions } = useCampStore();
@@ -74,11 +76,11 @@ export default function CampRegistrationContent() {
           <p className="">{campQuestionData?.description}</p>
           <Separator className="my-4" />
           {currentSection ? (
-            <>
+            <CampFormProvider>
               <h2 className="mb-2 text-lg font-semibold">{currentSection.title}</h2>
               <p className="mb-4">{currentSection.description}</p>
-              {/* Render questions for the current section here */}
-            </>
+              <CampForm />
+            </CampFormProvider>
           ) : (
             <div>Select a section to begin the registration process.</div>
           )}

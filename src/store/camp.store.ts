@@ -1,5 +1,5 @@
 import { CampForm, ICampRegistration, IGetQuestionsResponse } from "@/models/camp-form";
-import getQuestions from "@/services/api/camp.api";
+import getQuestions, { submitCampRegistration } from "@/services/api/camp.api";
 import { toast } from "sonner";
 import { create } from "zustand";
 
@@ -14,8 +14,10 @@ type Actions = {
   fetchCampQuestions: () => Promise<void>;
   setCampYear: (year: number) => void;
   setCampSubmissionData: (data: ICampRegistration) => void;
+  submitCampRegistration: (data: ICampRegistration) => Promise<void>;
   clearError: () => void;
   reset: () => void;
+  resetSubmissionData: () => void;
 };
 
 export const useCampStore = create<State & Actions>((set) => ({
@@ -55,6 +57,27 @@ export const useCampStore = create<State & Actions>((set) => ({
 
   setCampSubmissionData: (data: ICampRegistration) => set({ campSubmissionData: data }),
 
+  submitCampRegistration: async (data: ICampRegistration) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await submitCampRegistration(data);
+
+      if (response.responseCode !== "000") {
+        set({ error: response.message, loading: false });
+        toast.error(response.message);
+        return;
+      }
+
+      set({ campSubmissionData: data, loading: false, error: null });
+      toast.success("Camp registration submitted successfully!");
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to submit registration";
+      toast.error(errorMessage);
+      set({ error: errorMessage, loading: false });
+      throw err;
+    }
+  },
+
   reset: () =>
     set({
       campQuestionData: null,
@@ -63,4 +86,8 @@ export const useCampStore = create<State & Actions>((set) => ({
       campYear: new Date().getFullYear() + 1,
       campSubmissionData: null,
     }),
+
+  resetSubmissionData: () => {
+    set({ campSubmissionData: null });
+  },
 }));
