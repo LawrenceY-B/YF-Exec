@@ -9,8 +9,8 @@ export async function generateMetadata() {
 
 export default function CampQuestion() {
   return (
-    <>
+    <section className="w-full max-w-4xl">
       <CampRegistrationContent />
-    </>
+    </section>
   );
 }

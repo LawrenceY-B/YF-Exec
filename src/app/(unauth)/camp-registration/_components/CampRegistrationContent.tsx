@@ -65,7 +65,7 @@ export default function CampRegistrationContent() {
           />
         </Link>
         <span className="flex flex-col items-start">
-          <h1 className="text-sm font-bold sm:text-lg md:text-xl">{campQuestionData?.formTitle}</h1>
+          <h1 className="text-sm font-bold sm:text-lg md:text-xl">LIC Youth Fellowship</h1>
         </span>
       </nav>
 
