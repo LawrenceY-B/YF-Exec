@@ -65,7 +65,7 @@ export const useCampStore = create<State & Actions>((set) => ({
       if (response.responseCode !== "000") {
         set({ error: response.message, loading: false });
         toast.error(response.message);
-        return;
+        throw new Error(response.message);
       }
 
       set({ campSubmissionData: data, loading: false, error: null });

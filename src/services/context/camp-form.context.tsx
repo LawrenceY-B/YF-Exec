@@ -1,5 +1,6 @@
 import { Details, ICampRegistration } from "@/models/camp-form";
 import { useCampStore } from "@/store/camp.store";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useState } from "react";
 
 type CampFormContextType = {
@@ -19,6 +20,7 @@ export const CampFormProvider = ({ children }: { children: React.ReactNode }) =>
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
+  const router = useRouter();
   const { submitCampRegistration, resetSubmissionData, campQuestionData, campYear } = useCampStore();
 
   const updateFormData = (updates: Partial<Details>) => {
@@ -41,7 +43,6 @@ export const CampFormProvider = ({ children }: { children: React.ReactNode }) =>
     };
 
     if (!data || !isCompleteRegistration(data)) {
-      console.table();
       throw new Error("Form data is incomplete");
     }
 
@@ -49,8 +50,8 @@ export const CampFormProvider = ({ children }: { children: React.ReactNode }) =>
     try {
       await submitCampRegistration(data);
       setHasUnsavedChanges(false);
+      router.push("/success");
     } catch (error) {
-      //add toast error notification here
       throw error;
     } finally {
       setIsSubmitting(false);

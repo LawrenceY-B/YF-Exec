@@ -34,7 +34,7 @@ export const calculateAge = (dateOfBirth: Date): number => {
 
 export default function CampForm() {
   const { campQuestionData } = useCampStore();
-  const { updateFormData, submitForm } = useCampContext();
+  const { updateFormData, submitForm, campFormData } = useCampContext();
   const { currentStep, totalSteps, nextStep } = useCampStepperStore();
 
   type FormData = z.infer<ReturnType<typeof generateZodSchema>>;
@@ -63,18 +63,18 @@ export default function CampForm() {
 
     const currentSection = campQuestionData.sections[currentStep];
     currentSection.fields?.forEach((field) => {
-      console.log(field);
       if (field.id === "timestamp") return;
+      const existingValue = campFormData?.[field.id as keyof Details];
 
       if (field.type === "multiselect" || field.type === "checkbox") {
-        defaults[field.id] = [];
+        defaults[field.id] = existingValue && Array.isArray(existingValue) ? existingValue : [];
       } else {
-        defaults[field.id] = "";
+        defaults[field.id] = existingValue && typeof existingValue === "string" ? existingValue : "";
       }
     });
 
     return defaults;
-  }, [campQuestionData, currentStep]);
+  }, [campQuestionData, currentStep, campFormData]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -107,7 +107,6 @@ export default function CampForm() {
         console.error("Error calculating age:", error);
       }
     }
-    console.log(allergiesField);
     if (allergiesField === "Yes") {
       setHideAllergyDetails(false);
     } else {

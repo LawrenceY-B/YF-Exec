@@ -35,7 +35,7 @@ export default function CampRegistrationContent() {
   }, [error, campQuestionData]);
 
   if (loading) {
-    return <div className="flex">Loading...</div>;
+    return <div className="flex h-screen items-center justify-center">Loading...</div>;
   }
 
   if (error || !campQuestionData) {
