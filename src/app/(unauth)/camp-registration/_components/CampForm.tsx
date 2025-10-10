@@ -63,6 +63,7 @@ export default function CampForm() {
 
     const currentSection = campQuestionData.sections[currentStep];
     currentSection.fields?.forEach((field) => {
+      console.log(field);
       if (field.id === "timestamp") return;
 
       if (field.type === "multiselect" || field.type === "checkbox") {
@@ -79,6 +80,9 @@ export default function CampForm() {
     resolver: zodResolver(schema),
     defaultValues,
   });
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues, form]);
 
   const dobField = form.watch("dob");
   const allergiesField = form.watch("allergies");
@@ -103,13 +107,9 @@ export default function CampForm() {
         console.error("Error calculating age:", error);
       }
     }
-
+    console.log(allergiesField);
     if (allergiesField === "Yes") {
       setHideAllergyDetails(false);
-      const allergyDetails = form.getValues("allergyDetails");
-      if (!allergyDetails || (typeof allergyDetails === "string" && allergyDetails.trim() === "")) {
-        form.setValue("allergyDetails", "");
-      }
     } else {
       setHideAllergyDetails(true);
       form.setValue("allergyDetails", "");
@@ -119,7 +119,7 @@ export default function CampForm() {
       setHideConditionDetails(false);
     } else {
       setHideConditionDetails(true);
-      form.setValue("conditions", "");
+      form.setValue("conditionDetails", "");
     }
 
     if (homeChurchField === "Other") {
@@ -200,7 +200,7 @@ export default function CampForm() {
                       type={field.type}
                       placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
                       {...formField}
-                      value={formField.value as string}
+                      value={(formField.value as string) || ""}
                     />
                   </FormControl>
                   {field.description && <FormDescription className="text-left">{field.description}</FormDescription>}
@@ -226,7 +226,7 @@ export default function CampForm() {
                     <PhoneInput
                       id={`tel-${fieldName}`}
                       placeholder={field.description || "Enter phone number"}
-                      value={formField.value as string}
+                      value={(formField.value as string) || ""}
                       onChange={formField.onChange}
                       onBlur={formField.onBlur}
                       name={formField.name}
@@ -256,7 +256,7 @@ export default function CampForm() {
                       id={`textarea-${fieldName}`}
                       placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
                       {...formField}
-                      value={formField.value as string}
+                      value={(formField.value as string) || ""}
                     />
                   </FormControl>
                   {field.description && <FormDescription className="text-left">{field.description}</FormDescription>}
@@ -290,7 +290,7 @@ export default function CampForm() {
                       id={`number-${fieldName}`}
                       placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
                       {...formField}
-                      value={formField.value as string}
+                      value={(formField.value as string) || ""}
                       readOnly={isCalculatedAge}
                       className={cn(isCalculatedAge && "bg-muted cursor-not-allowed")}
                     />
@@ -369,13 +369,16 @@ export default function CampForm() {
                   <FormControl>
                     <RadioGroup
                       onValueChange={formField.onChange}
-                      value={formField.value as string}
+                      value={(formField.value as string) || ""}
                       className="flex flex-col space-y-1"
                     >
                       {field.options?.map((option) => (
                         <div key={option} className="flex items-center space-x-2">
                           <RadioGroupItem value={option} id={`${fieldName}-${option}`} />
-                          <label htmlFor={`${fieldName}-${option}`} className="cursor-pointer text-sm font-normal">
+                          <label
+                            htmlFor={`${fieldName}-${option}`}
+                            className="text gren-500 cursor-pointer text-sm font-normal"
+                          >
                             {option}
                           </label>
                         </div>
@@ -443,7 +446,7 @@ export default function CampForm() {
                     <Input
                       placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
                       {...formField}
-                      value={formField.value as string}
+                      value={(formField.value as string) || ""}
                     />
                   </FormControl>
                   {field.description && <FormDescription className="text-left">{field.description}</FormDescription>}

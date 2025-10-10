@@ -65,11 +65,11 @@ export default function CampRegistrationContent() {
           />
         </Link>
         <span className="flex flex-col items-start">
-          <h1 className="text-base font-bold sm:text-lg md:text-xl">{campQuestionData?.formTitle}</h1>
+          <h1 className="text-sm font-bold sm:text-lg md:text-xl">{campQuestionData?.formTitle}</h1>
         </span>
       </nav>
 
-      <main className="no-scrollbar flex h-screen w-full flex-col gap-4 overflow-x-hidden rounded-2xl bg-[var(--background)] p-3.5 shadow-md sm:grid sm:grid-cols-[40%_1fr] sm:p-4 lg:grid-cols-[30%_1fr]">
+      <main className="no-scrollbar flex w-full flex-col gap-4 overflow-x-hidden rounded-2xl bg-[var(--background)] p-3.5 shadow-md sm:grid sm:grid-cols-[40%_1fr] sm:p-4 lg:grid-cols-[30%_1fr]">
         <CampStepper />
         <section>
           <h1 className="text-xl font-bold">{campQuestionData?.formTitle}</h1>
@@ -79,6 +79,7 @@ export default function CampRegistrationContent() {
             <CampFormProvider>
               <h2 className="mb-2 text-lg font-semibold">{currentSection.title}</h2>
               <p className="mb-4">{currentSection.description}</p>
+              <Separator className="my-4" />
               <CampForm />
             </CampFormProvider>
           ) : (

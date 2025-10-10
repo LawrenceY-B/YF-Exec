@@ -25,6 +25,7 @@ export const CampFormProvider = ({ children }: { children: React.ReactNode }) =>
     setCampFormData((prev: Partial<Details> | null) => {
       if (!prev) return updates;
       const updated = { ...prev, ...updates };
+      console.table(updated);
       setHasUnsavedChanges(true);
       return updated;
     });

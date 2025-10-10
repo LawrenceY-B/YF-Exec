@@ -24,9 +24,10 @@ export const useCampStepperStore = create<State & Actions>((set, get) => ({
   currentSection: null,
 
   nextStep: () => {
-    const { currentStep, totalSteps } = get();
+    const { currentStep, totalSteps, setCurrentSection } = get();
     if (currentStep < totalSteps - 1) {
       set({ currentStep: currentStep + 1 });
+      setCurrentSection();
     }
   },
   prevStep: () => {
@@ -46,10 +47,16 @@ export const useCampStepperStore = create<State & Actions>((set, get) => ({
   getSections: (sections: Section[]) => {
     set({ section: sections, totalSteps: sections.length });
   },
-  setCurrentSection: () => {
+  setCurrentSection: (step?: number) => {
     const { section, currentStep } = get();
-    if (section) {
-      set({ currentSection: section[currentStep] });
+    let targetStep: number;
+    if (!step) {
+      targetStep = currentStep;
+    } else {
+      targetStep = step;
+    }
+    if (section && section[targetStep]) {
+      set({ currentSection: section[targetStep] });
     }
   },
 }));
